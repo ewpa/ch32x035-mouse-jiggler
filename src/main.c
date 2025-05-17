@@ -45,6 +45,8 @@
 #define LED_off PIN_low
 #endif
 
+#define DELAY_LOOPS (DELAY*1000/200)
+
 // =============================================================================
 // Main Function
 // =============================================================================
@@ -60,6 +62,7 @@ int main(void) {
 
   // Init USB mouse
   MOUSE_init();
+  int d = 0;
 
   // Loops
   while(1) {
@@ -69,6 +72,9 @@ int main(void) {
       LED_on(IND2_PIN);
       DLY_ms(200);
     }
+    else if (d--) {
+      DLY_ms(200);
+    }
     else {
       LED_on(IND2_PIN);
       LED_on(IND1_PIN);
@@ -76,8 +82,7 @@ int main(void) {
       DLY_ms(200);
       MOUSE_move(-DELTA, 0); // move left
       LED_off(IND1_PIN);
-      DLY_ms(DELAY/2 * 1000);
-      DLY_ms(DELAY/2 * 1000);
+      d = DELAY_LOOPS;
     }
   }
 }
